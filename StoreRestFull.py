@@ -14,7 +14,7 @@ app.secret_key='jose'
 api = Api(app)
 
 app.config['JWT_AUTH_URL_RULE'] = '/login'
-
+db.init_app(app)
 @app.before_first_request
 def create_tables():
     db.create_all()
@@ -27,5 +27,5 @@ api.add_resource(StoreList, '/stores')
 api.add_resource(UserRegistration, '/registration')
 
 if __name__ == '__main__':
-    db.init_app(app)
+
     app.run(port=7800, debug=True)
