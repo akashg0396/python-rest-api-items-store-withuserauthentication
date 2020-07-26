@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request
 from flask_restful import  Api
 from flask_jwt import JWT
@@ -8,7 +9,7 @@ from Resources.store import Store,StoreList
 
 from db import db
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','sqlite:///data.db') # DATABASE_URL is env var for postgres that we get from heroku however if this var is not present it will take second arg into consideration i.e sqlite
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #SQLAlchemy has its own modification tracker so turning off flask modification tracker
 app.secret_key='jose'
 api = Api(app)
