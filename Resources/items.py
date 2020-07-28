@@ -42,7 +42,7 @@ class Item(Resource):
         if item:
             item.price = data['price']
         else:
-            item = ItemModel(name,data['price'],data['store_id'])
+            item = ItemModel(name,**data)
         item.save_to_db()
         return item.json()
 
@@ -54,5 +54,5 @@ class Item(Resource):
 
 class ItemList(Resource):
     def get(self):
-        items =  ItemModel.query.all()
-        return {"items":list(map(lambda item:item.json(), items))}
+        items =  ItemModel.find_all()
+        return {"items":[item.json() for item in items]}
