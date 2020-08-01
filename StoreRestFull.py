@@ -6,12 +6,15 @@ from Security import authenticate,identity
 from Resources.User import UserRegistration , User
 from Resources.items import Item,ItemList
 from Resources.store import Store,StoreList
+from flask_cors import CORS
 
 from db import db
-app = Flask(__name__)
+app = Flask(__name__) 
+CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','sqlite:///data.db') # DATABASE_URL is env var for postgres that we get from heroku however if this var is not present it will take second arg into consideration i.e sqlite
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #SQLAlchemy has its own modification tracker so turning off flask modification tracker
 app.config['PROPAGATE_EXCEPTION'] = True
+app.config['CORS_HEADER'] = 'Content-Type'
 app.secret_key='jose'
 api = Api(app)
 
